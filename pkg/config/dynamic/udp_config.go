@@ -10,6 +10,7 @@ import (
 type UDPConfiguration struct {
 	Routers  map[string]*UDPRouter  `json:"routers,omitempty" toml:"routers,omitempty" yaml:"routers,omitempty" export:"true"`
 	Services map[string]*UDPService `json:"services,omitempty" toml:"services,omitempty" yaml:"services,omitempty" export:"true"`
+	Middlewares map[string]*UDPMiddleware `json:"middlewares,omitempty" toml:"middlewares,omitempty" yaml:"middlewares,omitempty" export:"true"`
 }
 
 // +k8s:deepcopy-gen=true

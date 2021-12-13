@@ -1,0 +1,20 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: MiddlewareUDP
+metadata:
+  name: ipwhitelist
+  namespace: default
+spec:
+  ipWhiteList:
+    sourceRange:
+      - 127.0.0.1/32
+
+---
+apiVersion: traefik.containo.us/v1alpha1
+kind: MiddlewareUDP
+metadata:
+  name: ipwhitelist
+  namespace: cross-ns
+spec:
+  ipWhiteList:
+    sourceRange:
+      - 127.0.0.1/32

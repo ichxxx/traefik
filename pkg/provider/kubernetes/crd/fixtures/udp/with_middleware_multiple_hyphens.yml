@@ -1,0 +1,9 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: MiddlewareUDP
+metadata:
+  name: multiple---hyphens
+  namespace: default
+spec:
+  ipWhiteList:
+    sourceRange:
+      - 127.0.0.1/32

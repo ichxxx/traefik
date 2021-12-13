@@ -37,6 +37,7 @@ type Client interface {
 	GetIngressRouteUDPs() []*v1alpha1.IngressRouteUDP
 	GetMiddlewares() []*v1alpha1.Middleware
 	GetMiddlewareTCPs() []*v1alpha1.MiddlewareTCP
+	GetMiddlewareUDPs() []*v1alpha1.MiddlewareUDP
 	GetTraefikService(namespace, name string) (*v1alpha1.TraefikService, bool, error)
 	GetTraefikServices() []*v1alpha1.TraefikService
 	GetTLSOptions() []*v1alpha1.TLSOption
@@ -279,6 +280,20 @@ func (c *clientWrapper) GetMiddlewareTCPs() []*v1alpha1.MiddlewareTCP {
 		middlewares, err := factory.Traefik().V1alpha1().MiddlewareTCPs().Lister().List(labels.Everything())
 		if err != nil {
 			log.Errorf("Failed to list TCP middlewares in namespace %s: %v", ns, err)
+		}
+		result = append(result, middlewares...)
+	}
+
+	return result
+}
+
+func (c *clientWrapper) GetMiddlewareUDPs() []*v1alpha1.MiddlewareUDP {
+	var result []*v1alpha1.MiddlewareUDP
+
+	for ns, factory := range c.factoriesCrd {
+		middlewares, err := factory.Traefik().V1alpha1().MiddlewareUDPs().Lister().List(labels.Everything())
+		if err != nil {
+			log.Errorf("Failed to list UDP middlewares in namespace %s: %v", ns, err)
 		}
 		result = append(result, middlewares...)
 	}

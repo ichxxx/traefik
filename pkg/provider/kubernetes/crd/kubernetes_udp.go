@@ -15,8 +15,9 @@ import (
 
 func (p *Provider) loadIngressRouteUDPConfiguration(ctx context.Context, client Client) *dynamic.UDPConfiguration {
 	conf := &dynamic.UDPConfiguration{
-		Routers:  map[string]*dynamic.UDPRouter{},
-		Services: map[string]*dynamic.UDPService{},
+		Routers:     map[string]*dynamic.UDPRouter{},
+		Middlewares: map[string]*dynamic.UDPMiddleware{},
+		Services:    map[string]*dynamic.UDPService{},
 	}
 
 	for _, ingressRouteUDP := range client.GetIngressRouteUDPs() {
