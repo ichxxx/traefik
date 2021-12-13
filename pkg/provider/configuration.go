@@ -33,8 +33,9 @@ func Merge(ctx context.Context, configurations map[string]*dynamic.Configuration
 			ServersTransports: make(map[string]*dynamic.TCPServersTransport),
 		},
 		UDP: &dynamic.UDPConfiguration{
-			Routers:  make(map[string]*dynamic.UDPRouter),
-			Services: make(map[string]*dynamic.UDPService),
+			Routers:     make(map[string]*dynamic.UDPRouter),
+			Services:    make(map[string]*dynamic.UDPService),
+			Middlewares: make(map[string]*dynamic.UDPMiddleware),
 		},
 	}
 
@@ -61,6 +62,9 @@ func Merge(ctx context.Context, configurations map[string]*dynamic.Configuration
 
 	middlewaresTCPToDelete := map[string]struct{}{}
 	middlewaresTCP := map[string][]string{}
+
+	middlewaresUDPToDelete := map[string]struct{}{}
+	middlewaresUDP := map[string][]string{}
 
 	transportsToDelete := map[string]struct{}{}
 	transports := map[string][]string{}
@@ -145,6 +149,13 @@ func Merge(ctx context.Context, configurations map[string]*dynamic.Configuration
 				middlewaresTCPToDelete[middlewareName] = struct{}{}
 			}
 		}
+
+		for middlewareName, middleware := range conf.UDP.Middlewares {
+			middlewaresUDP[middlewareName] = append(middlewaresUDP[middlewareName], root)
+			if !AddMiddlewareUDP(configuration.UDP, middlewareName, middleware) {
+				middlewaresUDPToDelete[middlewareName] = struct{}{}
+			}
+		}
 	}
 
 	for serviceName := range servicesToDelete {
@@ -215,6 +226,13 @@ func Merge(ctx context.Context, configurations map[string]*dynamic.Configuration
 			Interface("configuration", middlewaresTCP[middlewareName]).
 			Msg("TCP Middleware defined multiple times with different configurations")
 		delete(configuration.TCP.Middlewares, middlewareName)
+	}
+
+	for middlewareName := range middlewaresUDPToDelete {
+		logger.Error().Str(logs.MiddlewareName, middlewareName).
+			Interface("configuration", middlewaresUDP[middlewareName]).
+			Msg("UDP Middleware defined multiple times with different configurations")
+		delete(configuration.UDP.Middlewares, middlewareName)
 	}
 
 	return configuration
@@ -308,6 +326,16 @@ func AddRouterUDP(configuration *dynamic.UDPConfiguration, routerName string, ro
 	}
 
 	return reflect.DeepEqual(configuration.Routers[routerName], router)
+}
+
+// AddMiddlewareUDP adds a middleware to a configuration.
+func AddMiddlewareUDP(configuration *dynamic.UDPConfiguration, middlewareName string, middleware *dynamic.UDPMiddleware) bool {
+	if _, ok := configuration.Middlewares[middlewareName]; !ok {
+		configuration.Middlewares[middlewareName] = middleware
+		return true
+	}
+
+	return reflect.DeepEqual(configuration.Middlewares[middlewareName], middleware)
 }
 
 // AddService adds a service to a configuration.

@@ -8,6 +8,7 @@ import (
 	"github.com/traefik/traefik/v3/pkg/config/dynamic"
 	"github.com/traefik/traefik/v3/pkg/config/runtime"
 	"github.com/traefik/traefik/v3/pkg/server/service/udp"
+	udpmiddleware "github.com/traefik/traefik/v3/pkg/server/middleware/udp"
 )
 
 func TestRuntimeConfiguration(t *testing.T) {
@@ -118,8 +119,8 @@ func TestRuntimeConfiguration(t *testing.T) {
 				UDPRouters:  test.routerConfig,
 			}
 			serviceManager := udp.NewManager(conf)
-			routerManager := NewManager(conf, serviceManager)
-
+			middlewaresBuilder := udpmiddleware.NewBuilder(conf.UDPMiddlewares)
+			routerManager := NewManager(conf, serviceManager, middlewaresBuilder)
 			_ = routerManager.BuildHandlers(context.Background(), entryPoints)
 
 			// even though conf was passed by argument to the manager builders above,

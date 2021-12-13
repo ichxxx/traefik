@@ -543,9 +543,15 @@ udp:
       entryPoints:
         - foobar
         - foobar
+      middlewares:
+        - foobar
+        - foobar
       service: foobar
     UDPRouter1:
       entryPoints:
+        - foobar
+        - foobar
+      middlewares:
         - foobar
         - foobar
       service: foobar
@@ -562,6 +568,12 @@ udp:
             weight: 42
           - name: foobar
             weight: 42
+  middlewares:
+    UDPMiddleware01:
+      ipAllowList:
+        sourceRange:
+          - foobar
+          - foobar
 tls:
   certificates:
     - certFile: foobar

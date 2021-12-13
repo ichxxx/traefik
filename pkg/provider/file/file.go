@@ -385,8 +385,9 @@ func (p *Provider) loadFileConfigFromDirectory(ctx context.Context, directory st
 				Options: make(map[string]tls.Options),
 			},
 			UDP: &dynamic.UDPConfiguration{
-				Routers:  make(map[string]*dynamic.UDPRouter),
-				Services: make(map[string]*dynamic.UDPService),
+				Routers:     make(map[string]*dynamic.UDPRouter),
+				Services:    make(map[string]*dynamic.UDPService),
+				Middlewares: make(map[string]*dynamic.UDPMiddleware),
 			},
 		}
 	}
@@ -486,6 +487,14 @@ func (p *Provider) loadFileConfigFromDirectory(ctx context.Context, directory st
 				logger.Warn().Str(logs.RouterName, name).Msg("UDP router already configured, skipping")
 			} else {
 				configuration.UDP.Routers[name] = conf
+			}
+		}
+
+		for name, conf := range c.UDP.Middlewares {
+			if _, exists := configuration.UDP.Middlewares[name]; exists {
+				logger.Warn().Str(logs.MiddlewareName, name).Msg("UDP middleware already configured, skipping")
+			} else {
+				configuration.UDP.Middlewares[name] = conf
 			}
 		}
 
@@ -605,8 +614,9 @@ func (p *Provider) decodeConfiguration(filePath, content string) (*dynamic.Confi
 			Options: make(map[string]tls.Options),
 		},
 		UDP: &dynamic.UDPConfiguration{
-			Routers:  make(map[string]*dynamic.UDPRouter),
-			Services: make(map[string]*dynamic.UDPService),
+			Routers:     make(map[string]*dynamic.UDPRouter),
+			Services:    make(map[string]*dynamic.UDPService),
+			Middlewares: make(map[string]*dynamic.UDPMiddleware),
 		},
 	}
 

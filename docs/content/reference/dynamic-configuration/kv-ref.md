@@ -400,11 +400,17 @@ THIS FILE MUST NOT BE EDITED BY HAND
 | `traefik/tls/stores/Store1/defaultGeneratedCert/domain/sans/0` | `foobar` |
 | `traefik/tls/stores/Store1/defaultGeneratedCert/domain/sans/1` | `foobar` |
 | `traefik/tls/stores/Store1/defaultGeneratedCert/resolver` | `foobar` |
+| `traefik/udp/middlewares/UDPMiddleware01/ipAllowList/sourceRange/0` | `foobar` |
+| `traefik/udp/middlewares/UDPMiddleware01/ipAllowList/sourceRange/1` | `foobar` |
 | `traefik/udp/routers/UDPRouter0/entryPoints/0` | `foobar` |
 | `traefik/udp/routers/UDPRouter0/entryPoints/1` | `foobar` |
+| `traefik/udp/routers/UDPRouter0/middlewares/0` | `foobar` |
+| `traefik/udp/routers/UDPRouter0/middlewares/1` | `foobar` |
 | `traefik/udp/routers/UDPRouter0/service` | `foobar` |
 | `traefik/udp/routers/UDPRouter1/entryPoints/0` | `foobar` |
 | `traefik/udp/routers/UDPRouter1/entryPoints/1` | `foobar` |
+| `traefik/udp/routers/UDPRouter1/middlewares/0` | `foobar` |
+| `traefik/udp/routers/UDPRouter1/middlewares/1` | `foobar` |
 | `traefik/udp/routers/UDPRouter1/service` | `foobar` |
 | `traefik/udp/services/UDPService01/loadBalancer/servers/0/address` | `foobar` |
 | `traefik/udp/services/UDPService01/loadBalancer/servers/1/address` | `foobar` |

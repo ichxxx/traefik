@@ -42,6 +42,7 @@ func main() {
 	dynConf.HTTP.Models = map[string]*dynamic.Model{}
 	clean(dynConf.HTTP.Middlewares)
 	clean(dynConf.TCP.Middlewares)
+	clean(dynConf.UDP.Middlewares)
 	clean(dynConf.HTTP.Services)
 	clean(dynConf.TCP.Services)
 	clean(dynConf.UDP.Services)

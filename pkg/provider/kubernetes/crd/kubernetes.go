@@ -318,6 +318,14 @@ func (p *Provider) loadConfigurationFromCRD(ctx context.Context, client Client) 
 		}
 	}
 
+	for _, middlewareUDP := range client.GetMiddlewareUDPs() {
+		id := provider.Normalize(makeID(middlewareUDP.Namespace, middlewareUDP.Name))
+
+		conf.UDP.Middlewares[id] = &dynamic.UDPMiddleware{
+			IPAllowList: middlewareUDP.Spec.IPAllowList,
+		}
+	}
+
 	cb := configBuilder{
 		client:                    client,
 		allowCrossNamespace:       p.AllowCrossNamespace,

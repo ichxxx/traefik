@@ -219,8 +219,9 @@ func (p *Provider) loadConfigurationFromGateway(ctx context.Context, client Clie
 				ServersTransports: map[string]*dynamic.TCPServersTransport{},
 			},
 			UDP: &dynamic.UDPConfiguration{
-				Routers:  map[string]*dynamic.UDPRouter{},
-				Services: map[string]*dynamic.UDPService{},
+				Routers:     map[string]*dynamic.UDPRouter{},
+				Middlewares: map[string]*dynamic.UDPMiddleware{},
+				Services:    map[string]*dynamic.UDPService{},
 			},
 			TLS: &dynamic.TLSConfiguration{},
 		}
@@ -310,8 +311,9 @@ func (p *Provider) createGatewayConf(ctx context.Context, client Client, gateway
 			ServersTransports: map[string]*dynamic.TCPServersTransport{},
 		},
 		UDP: &dynamic.UDPConfiguration{
-			Routers:  map[string]*dynamic.UDPRouter{},
-			Services: map[string]*dynamic.UDPService{},
+			Routers:     map[string]*dynamic.UDPRouter{},
+			Middlewares: map[string]*dynamic.UDPMiddleware{},
+			Services:    map[string]*dynamic.UDPService{},
 		},
 		TLS: &dynamic.TLSConfiguration{},
 	}

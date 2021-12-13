@@ -142,6 +142,9 @@ nav:
         - 'InFlightConn': 'middlewares/tcp/inflightconn.md'
         - 'IPWhiteList': 'middlewares/tcp/ipwhitelist.md'
         - 'IPAllowList': 'middlewares/tcp/ipallowlist.md'
+    - 'UDP':
+        - 'Overview': 'middlewares/udp/overview.md'
+        - 'IpAllowList': 'middlewares/udp/ipallowlist.md'
   - 'Plugins & Plugin Catalog': 'plugins/index.md'
   - 'Operations':
       - 'CLI': 'operations/cli.md'

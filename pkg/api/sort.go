@@ -341,6 +341,22 @@ func (m tcpMiddlewareRepresentation) status() string {
 	return m.Status
 }
 
+func (m udpMiddlewareRepresentation) name() string {
+	return m.Name
+}
+
+func (m udpMiddlewareRepresentation) resourceType() string {
+	return m.Type
+}
+
+func (m udpMiddlewareRepresentation) provider() string {
+	return m.Provider
+}
+
+func (m udpMiddlewareRepresentation) status() string {
+	return m.Status
+}
+
 type orderedByName interface {
 	orderedWithName
 }

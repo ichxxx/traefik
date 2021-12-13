@@ -480,9 +480,11 @@
   [udp.routers]
     [udp.routers.UDPRouter0]
       entryPoints = ["foobar", "foobar"]
+      middlewares = ["foobar", "foobar"]
       service = "foobar"
     [udp.routers.UDPRouter1]
       entryPoints = ["foobar", "foobar"]
+      middlewares = ["foobar", "foobar"]
       service = "foobar"
   [udp.services]
     [udp.services.UDPService01]
@@ -503,6 +505,10 @@
         [[udp.services.UDPService02.weighted.services]]
           name = "foobar"
           weight = 42
+  [udp.middlewares]
+    [udp.middlewares.UDPMiddleware01]
+      [udp.middlewares.UDPMiddleware01.ipAllowList]
+        sourceRange = ["foobar", "foobar"]
 
 [tls]
 

@@ -1,6 +1,7 @@
 package integration
 
 import (
+	"errors"
 	"net"
 	"net/http"
 	"strings"
@@ -50,12 +51,26 @@ func guessWhoUDP(addr string) (string, error) {
 		return "", err
 	}
 
-	out := make([]byte, 2048)
-	n, err := conn.Read(out)
-	if err != nil {
+	outCh := make(chan []byte)
+	errCh := make(chan error)
+	go func() {
+		out := make([]byte, 2048)
+		n, err := conn.Read(out)
+		if err != nil {
+			errCh <- err
+			return
+		}
+		outCh <- out[:n]
+	}()
+
+	select {
+	case out := <-outCh:
+		return string(out), nil
+	case err := <-errCh:
 		return "", err
+	case <-time.After(5 * time.Second):
+		return "", errors.New("timeout")
 	}
-	return string(out[:n]), nil
 }
 
 func (s *UDPSuite) TestWRR() {
@@ -103,6 +118,38 @@ func (s *UDPSuite) TestWRR() {
 	select {
 	case <-stop:
 	case <-time.Tick(5 * time.Second):
+		log.Info().Msg("Timeout")
+	}
+}
+
+func (s *UDPSuite) TestMiddlewareAllowList() {
+	file := s.adaptFile("fixtures/udp/ip-allowlist.toml", struct {
+		WhoamiA string
+		WhoamiB string
+	}{
+		WhoamiA: s.getComposeServiceIP("whoami-a"),
+		WhoamiB: s.getComposeServiceIP("whoami-b"),
+	})
+
+	s.traefikCmd(withConfigFile(file))
+
+	err := try.GetRequest("http://127.0.0.1:8080/api/rawdata", 5*time.Second, try.StatusCodeIs(http.StatusOK))
+	require.NoError(s.T(), err)
+
+	stop := make(chan struct{})
+	go func() {
+		_, err := guessWhoUDP("127.0.0.1:8093")
+		assert.EqualError(s.T(), err, "timeout")
+
+		out, err := guessWhoUDP("127.0.0.1:8094")
+		require.NoError(s.T(), err)
+		assert.Contains(s.T(), out, "whoami-b")
+		close(stop)
+	}()
+
+	select {
+	case <-stop:
+	case <-time.Tick(10 * time.Second):
 		log.Info().Msg("Timeout")
 	}
 }

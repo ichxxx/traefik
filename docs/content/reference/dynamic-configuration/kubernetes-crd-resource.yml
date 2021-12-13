@@ -171,6 +171,8 @@ spec:
     - services:
         - name: whoamiudp
           port: 8080
+      middlewares:
+        - name: ipallowlist
 
 ---
 apiVersion: traefik.io/v1alpha1

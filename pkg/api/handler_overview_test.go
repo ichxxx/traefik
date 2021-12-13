@@ -219,6 +219,31 @@ func TestHandler_Overview(t *testing.T) {
 						Status: runtime.StatusDisabled,
 					},
 				},
+				UDPMiddlewares: map[string]*runtime.UDPMiddlewareInfo{
+					"ipallowlist1@myprovider": {
+						UDPMiddleware: &dynamic.UDPMiddleware{
+							IPAllowList: &dynamic.UDPIPAllowList{
+								SourceRange: []string{"127.0.0.1/32"},
+							},
+						},
+						Status: runtime.StatusEnabled,
+					},
+					"ipallowlist2@myprovider": {
+						UDPMiddleware: &dynamic.UDPMiddleware{
+							IPAllowList: &dynamic.UDPIPAllowList{
+								SourceRange: []string{"127.0.0.1/32"},
+							},
+						},
+					},
+					"ipallowlist3@myprovider": {
+						UDPMiddleware: &dynamic.UDPMiddleware{
+							IPAllowList: &dynamic.UDPIPAllowList{
+								SourceRange: []string{"127.0.0.1/32"},
+							},
+						},
+						Status: runtime.StatusDisabled,
+					},
+				},
 			},
 			expected: expected{
 				statusCode: http.StatusOK,

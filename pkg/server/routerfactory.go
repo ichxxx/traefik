@@ -8,6 +8,7 @@ import (
 	"github.com/traefik/traefik/v3/pkg/config/static"
 	"github.com/traefik/traefik/v3/pkg/server/middleware"
 	tcpmiddleware "github.com/traefik/traefik/v3/pkg/server/middleware/tcp"
+	udpmiddleware "github.com/traefik/traefik/v3/pkg/server/middleware/udp"
 	"github.com/traefik/traefik/v3/pkg/server/router"
 	tcprouter "github.com/traefik/traefik/v3/pkg/server/router/tcp"
 	udprouter "github.com/traefik/traefik/v3/pkg/server/router/udp"
@@ -97,7 +98,8 @@ func (f *RouterFactory) CreateRouters(rtConf *runtime.Configuration) (map[string
 
 	// UDP
 	svcUDPManager := udpsvc.NewManager(rtConf)
-	rtUDPManager := udprouter.NewManager(rtConf, svcUDPManager)
+	middlewaresUDPBuilder := udpmiddleware.NewBuilder(rtConf.UDPMiddlewares)
+	rtUDPManager := udprouter.NewManager(rtConf, svcUDPManager, middlewaresUDPBuilder)
 	routersUDP := rtUDPManager.BuildHandlers(ctx, f.entryPointsUDP)
 
 	rtConf.PopulateUsedBy()

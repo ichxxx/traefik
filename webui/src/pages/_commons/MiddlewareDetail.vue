@@ -104,6 +104,7 @@ export default {
   computed: {
     ...mapGetters('http', { http_middlewareByName: 'middlewareByName' }),
     ...mapGetters('tcp', { tcp_middlewareByName: 'middlewareByName' }),
+    ...mapGetters('udp', { udp_middlewareByName: 'middlewareByName' }),
     protocol () {
       return this.$route.meta.protocol
     },
@@ -123,6 +124,7 @@ export default {
   methods: {
     ...mapActions('http', { http_getMiddlewareByName: 'getMiddlewareByName', http_getRouterByName: 'getRouterByName', http_getAllRouters: 'getAllRouters' }),
     ...mapActions('tcp', { tcp_getMiddlewareByName: 'getMiddlewareByName', tcp_getRouterByName: 'getRouterByName', tcp_getAllRouters: 'getAllRouters' }),
+    ...mapActions('udp', { udp_getMiddlewareByName: 'getMiddlewareByName', udp_getRouterByName: 'getRouterByName', udp_getAllRouters: 'getAllRouters' }),
     refreshAll () {
       if (this.middlewareByName.loading) {
         return
@@ -183,6 +185,7 @@ export default {
     clearInterval(this.timeOutGetAll)
     this.$store.commit('http/getMiddlewareByNameClear')
     this.$store.commit('tcp/getMiddlewareByNameClear')
+    this.$store.commit('udp/getMiddlewareByNameClear')
   }
 }
 </script>
