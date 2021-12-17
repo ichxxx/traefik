@@ -4,11 +4,10 @@ import (
 	"context"
 	"testing"
 
-	udpmiddleware "github.com/traefik/traefik/v2/pkg/server/middleware/udp"
-
 	"github.com/stretchr/testify/assert"
 	"github.com/traefik/traefik/v2/pkg/config/dynamic"
 	"github.com/traefik/traefik/v2/pkg/config/runtime"
+	udpmiddleware "github.com/traefik/traefik/v2/pkg/server/middleware/udp"
 	"github.com/traefik/traefik/v2/pkg/server/service/udp"
 )
 

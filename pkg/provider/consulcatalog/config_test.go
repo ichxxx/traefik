@@ -2587,7 +2587,7 @@ func Test_buildConfiguration(t *testing.T) {
 				UDP: &dynamic.UDPConfiguration{
 					Routers:     map[string]*dynamic.UDPRouter{},
 					Middlewares: map[string]*dynamic.UDPMiddleware{},
-					Services:    map[string]*dynamic.UDPService{
+					Services: map[string]*dynamic.UDPService{
 						"foo": {
 							LoadBalancer: &dynamic.UDPServersLoadBalancer{
 								Servers: []dynamic.UDPServer{

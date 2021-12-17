@@ -111,7 +111,6 @@ func (m *Manager) buildEntryPointHandlers(ctx context.Context, configs map[strin
 	return handlers, nil
 }
 
-
 func (m *Manager) buildUDPHandler(ctx context.Context, router *runtime.UDPRouterInfo) (udp.Handler, error) {
 	var qualifiedNames []string
 	for _, name := range router.Middlewares {

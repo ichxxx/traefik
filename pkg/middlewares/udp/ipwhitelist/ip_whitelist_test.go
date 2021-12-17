@@ -126,9 +126,9 @@ func TestIPWhiteLister_ServeUDP(t *testing.T) {
 			}()
 
 			select {
-			case read := <- readCh:
+			case read := <-readCh:
 				assert.Equal(t, test.expected, string(read))
-			case <- time.After(time.Second):
+			case <-time.After(time.Second):
 				assert.Empty(t, test.expected)
 			}
 		})

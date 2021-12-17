@@ -192,13 +192,13 @@ func TestDecodeConfiguration(t *testing.T) {
 		"traefik.tcp.services.Service1.loadbalancer.TerminationDelay":      "42",
 		"traefik.tcp.services.Service1.loadbalancer.proxyProtocol":         "true",
 
-		"traefik.udp.middlewares.Middleware0.ipwhitelist.sourcerange":  "foobar, fiibar",
-		"traefik.udp.routers.Router0.entrypoints":                      "foobar, fiibar",
-		"traefik.udp.routers.Router0.service":                          "foobar",
-		"traefik.udp.routers.Router1.entrypoints":                      "foobar, fiibar",
-		"traefik.udp.routers.Router1.service":                          "foobar",
-		"traefik.udp.services.Service0.loadbalancer.server.Port":       "42",
-		"traefik.udp.services.Service1.loadbalancer.server.Port":       "42",
+		"traefik.udp.middlewares.Middleware0.ipwhitelist.sourcerange": "foobar, fiibar",
+		"traefik.udp.routers.Router0.entrypoints":                     "foobar, fiibar",
+		"traefik.udp.routers.Router0.service":                         "foobar",
+		"traefik.udp.routers.Router1.entrypoints":                     "foobar, fiibar",
+		"traefik.udp.routers.Router1.service":                         "foobar",
+		"traefik.udp.services.Service0.loadbalancer.server.Port":      "42",
+		"traefik.udp.services.Service1.loadbalancer.server.Port":      "42",
 	}
 
 	configuration, err := DecodeConfiguration(labels)

@@ -13,7 +13,7 @@ type IngressRouteUDPSpec struct {
 
 // RouteUDP contains the set of routes.
 type RouteUDP struct {
-	Services    []ServiceUDP `json:"services,omitempty"`
+	Services    []ServiceUDP      `json:"services,omitempty"`
 	Middlewares []ObjectReference `json:"middlewares,omitempty"`
 }
 

@@ -2800,7 +2800,7 @@ func Test_buildConfiguration(t *testing.T) {
 			},
 			expected: &dynamic.Configuration{
 				UDP: &dynamic.UDPConfiguration{
-					Routers: map[string]*dynamic.UDPRouter{},
+					Routers:     map[string]*dynamic.UDPRouter{},
 					Middlewares: map[string]*dynamic.UDPMiddleware{},
 					Services: map[string]*dynamic.UDPService{
 						"foo": {

@@ -50,8 +50,8 @@ func (h Handler) getOverview(rw http.ResponseWriter, request *http.Request) {
 			Middlewares: getTCPMiddlewareSection(h.runtimeConfiguration.TCPMiddlewares),
 		},
 		UDP: schemeOverview{
-			Routers:  getUDPRouterSection(h.runtimeConfiguration.UDPRouters),
-			Services: getUDPServiceSection(h.runtimeConfiguration.UDPServices),
+			Routers:     getUDPRouterSection(h.runtimeConfiguration.UDPRouters),
+			Services:    getUDPServiceSection(h.runtimeConfiguration.UDPServices),
 			Middlewares: getUDPMiddlewareSection(h.runtimeConfiguration.UDPMiddlewares),
 		},
 		Features:  getFeatures(h.staticConfig),

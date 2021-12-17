@@ -282,7 +282,7 @@ func (p *Provider) loadConfigurationFromCRD(ctx context.Context, client Client) 
 		id := provider.Normalize(makeID(middlewareUDP.Namespace, middlewareUDP.Name))
 
 		conf.UDP.Middlewares[id] = &dynamic.UDPMiddleware{
-			IPWhiteList:  middlewareUDP.Spec.IPWhiteList,
+			IPWhiteList: middlewareUDP.Spec.IPWhiteList,
 		}
 	}
 
