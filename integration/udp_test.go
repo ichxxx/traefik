@@ -100,3 +100,34 @@ func (s *UDPSuite) TestWRR(c *check.C) {
 		c.Error("Timeout")
 	}
 }
+
+func (s *UDPSuite) TestMiddlewareWhiteList(c *check.C) {
+	file := s.adaptFile(c, "fixtures/udp/ip-whitelist.toml", struct{}{})
+	defer os.Remove(file)
+
+	cmd, display := s.traefikCmd(withConfigFile(file))
+	defer display(c)
+
+	err := cmd.Start()
+	c.Assert(err, checker.IsNil)
+	defer s.killCmd(cmd)
+
+	err = try.GetRequest("http://127.0.0.1:8080/api/rawdata", 5*time.Second, try.StatusCodeIs(http.StatusOK))
+	c.Assert(err, checker.IsNil)
+
+	call := map[string]int{}
+	for i := 0; i < 4; i++ {
+		out, err := guessWhoUDP("127.0.0.1:8093")
+		c.Assert(err, checker.IsNil)
+		switch {
+		case strings.Contains(out, "whoami-a"):
+			call["whoami-a"]++
+		case strings.Contains(out, "whoami-b"):
+			call["whoami-b"]++
+		default:
+			call["unknown"]++
+		}
+	}
+
+	c.Assert(call, checker.DeepEquals, map[string]int{"whoami-a": 2, "whoami-b": 0, "unknown": 0})
+}

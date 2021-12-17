@@ -134,30 +134,3 @@ func TestIPWhiteLister_ServeUDP(t *testing.T) {
 		})
 	}
 }
-
-type contextWriteCloser struct {
-	net.Conn
-	addr
-}
-
-type addr struct {
-	remoteAddr string
-}
-
-func (a addr) Network() string {
-	panic("implement me")
-}
-
-func (a addr) String() string {
-	return a.remoteAddr
-}
-
-func (c contextWriteCloser) CloseWrite() error {
-	panic("implement me")
-}
-
-func (c contextWriteCloser) RemoteAddr() net.Addr { return c.addr }
-
-func (c contextWriteCloser) Context() context.Context {
-	return context.Background()
-}

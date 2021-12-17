@@ -2,8 +2,9 @@ package udp
 
 import (
 	"context"
-	udpmiddleware "github.com/traefik/traefik/v2/pkg/server/middleware/udp"
 	"testing"
+
+	udpmiddleware "github.com/traefik/traefik/v2/pkg/server/middleware/udp"
 
 	"github.com/stretchr/testify/assert"
 	"github.com/traefik/traefik/v2/pkg/config/dynamic"

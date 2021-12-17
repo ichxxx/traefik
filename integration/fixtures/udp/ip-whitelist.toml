@@ -1,0 +1,45 @@
+[global]
+  checkNewVersion = false
+  sendAnonymousUsage = false
+
+[log]
+  level = "DEBUG"
+
+[entryPoints]
+  [entryPoints.udp]
+    address = ":8093"
+
+[api]
+  insecure = true
+
+[providers.file]
+  filename = "{{ .SelfFilename }}"
+
+## dynamic configuration ##
+
+[udp]
+  [udp.routers]
+    [udp.routers.to-whoami-a]
+      entryPoints = ["udp"]
+      service = "whoami-a"
+      middlewares = ["blocking-ipwhitelist"]
+
+    [tcp.routers.to-whoami-b]
+      entryPoints = ["udp"]
+      service = "whoami-b"
+      middlewares = ["allowing-ipwhitelist"]
+
+  [udp.services]
+    [udp.services.whoami-a.loadBalancer]
+      [[udp.services.whoami-a.loadBalancer.servers]]
+        address = "whoami-a:8080"
+
+    [udp.services.whoami-b.loadBalancer]
+      [[udp.services.whoami-b.loadBalancer.servers]]
+        address = "whoami-b:8080"
+
+  [udp.middlewares]
+    [udp.middlewares.allowing-ipwhitelist.ipWhiteList]
+      sourceRange = ["127.0.0.1/32"]
+    [udp.middlewares.blocking-ipwhitelist.ipWhiteList]
+      sourceRange = ["127.127.127.127/32"]
